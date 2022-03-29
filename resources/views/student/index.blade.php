@@ -20,6 +20,8 @@
         <th>Name</th>
         <th>Class</th>
         <th>Major</th>
+        <th>Address</th>
+        <th>Datebirth</th>
         <th width="280px">Action</th>
     </tr>
 @foreach ($student as $mhs)
@@ -28,6 +30,8 @@
         <td>{{ $mhs ->name }}</td>
         <td>{{ $mhs ->class }}</td>
         <td>{{ $mhs ->major }}</td>
+        <td>{{ $mhs ->address }}</td>
+        <td>{{ $mhs ->datebirth }}</td>
         <td>
             <form action="{{ route('student.destroy',['student'=>$mhs->nim]) }}" method="POST">
                 <a class="btn btn-info" href="{{ route('student.show',$mhs->nim) }}">Show</a>
@@ -40,4 +44,5 @@
     </tr>
 @endforeach
 </table>
+{{ $student->links()}};
 @endsection

@@ -33,6 +33,14 @@
                     <label for="Major">Major</label>
                     <input type="Major" name="Major" class="form-control" id="Major" ariadescribedby="Major" >
                 </div>
+                <div class="form-group">
+                    <label for="Address">Address</label>
+                    <input type="Address" name="Address" class="form-control" id="Address" ariadescribedby="Address" >
+                </div>
+                <div class="form-group">
+                    <label for="Datebirth">Datebirth</label>
+                    <input type="Date" name="Datebirth" class="form-control" id="Datebirth" ariadescribedby="Datebirth" >
+                </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

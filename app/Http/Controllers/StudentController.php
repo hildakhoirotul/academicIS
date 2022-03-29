@@ -16,7 +16,7 @@ class StudentController extends Controller
     public function index()
     {
         //the eloquent function to displays data
-        $student=Student::all();//Mengambil semua isi tabel
+        $student=DB::table('student')->paginate(3);//Mengambil semua isi tabel
         $paginate=Student::orderBy('id_student','asc')->paginate(3);
         return view('student.index',['student'=>$student,'paginate'=>$paginate]);
     }
@@ -34,6 +34,8 @@ class StudentController extends Controller
             'Name'=>'required',
             'Class'=>'required',
             'Major'=>'required',
+            'Address'=>'required',
+            'Datebirth'=>'required',
         ]);
 
         //eloquent function to add data
@@ -66,6 +68,8 @@ class StudentController extends Controller
             'Name'=>'required',
             'Class'=>'required',
             'Major'=>'required',
+            'Address'=>'required',
+            'Datebirth'=>'required',
         ]);
 
         //eloquent function to update the data
@@ -75,6 +79,8 @@ class StudentController extends Controller
             'name'=>$request->Name,
             'class'=>$request->Class,
             'major'=>$request->Major,
+            'address'=>$request->Address,
+            'datebirth'=>$request->Datebirth,
         ]);
 
         //if the data successfully updated, will return to main page
