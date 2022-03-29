@@ -14,6 +14,17 @@
     <p>{{ $message }}</p>
 </div>
 @endif
+<div class="row">
+    <div class="col-md-6">
+        <form action="/student">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search..." name="search" value="{{
+                    request('search')}}">
+                <button class="btn btn-danger" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
 <table class="table table-bordered">
     <tr>
         <th>Nim</th>

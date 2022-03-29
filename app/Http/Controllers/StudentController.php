@@ -21,6 +21,15 @@ class StudentController extends Controller
         return view('student.index',['student'=>$student,'paginate'=>$paginate]);
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        $student = DB::table('student')
+        ->where('name','like',"%".$search."%")
+        ->paginate(1);
+        return view('index',['student'=>$student]);
+    }
+
     public function create()
     {
         return view('student.create');
@@ -95,4 +104,5 @@ class StudentController extends Controller
         return redirect()->route('student.index')
         ->with('success','Student Successfully Deleted');
     }
+
 };
