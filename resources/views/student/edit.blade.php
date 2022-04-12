@@ -30,19 +30,15 @@
                     </div>
                     <div class="form-group">
                         <label for="Class">Class</label>
-                        <input type="Class" name="Class" class="form-control" id="Class" value="{{ $Student->class }}" aria-describedby="Class" >
+                        <select name="Class" id = "class" class="form-control">
+                            @foreach($class as $kls)
+                            <option value="{{$kls->id}}" {{$Student->class_id == $kls->id ? 'selected' : ''}} >{{$kls->class_name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="Major">Major</label>
                         <input type="Major" name="Major" class="form-control" id="Major" value="{{ $Student->major }}" aria-describedby="Major" >
-                    </div>
-                    <div class="form-group">
-                        <label for="Address">Address</label>
-                        <input type="Address" name="Address" class="form-control" id="Address" value="{{ $Student->address }}" aria-describedby="Address" >
-                    </div>
-                    <div class="form-group">
-                        <label for="Datebirth">Datebirth</label>
-                        <input type="Datebirth" name="Datebirth" class="form-control" id="Datebirth" value="{{ $Student->datebirth }}" aria-describedby="Datebirth" >
                     </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

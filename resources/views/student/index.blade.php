@@ -32,18 +32,14 @@
         <th>Name</th>
         <th>Class</th>
         <th>Major</th>
-        <th>Address</th>
-        <th>Datebirth</th>
         <th width="280px">Action</th>
     </tr>
-@foreach ($student as $mhs)
+@foreach ($paginate as $mhs)
     <tr>
         <td>{{ $mhs ->nim }}</td>
         <td>{{ $mhs ->name }}</td>
-        <td>{{ $mhs ->class }}</td>
+        <td>{{ $mhs ->class->class_name }}</td>
         <td>{{ $mhs ->major }}</td>
-        <td>{{ $mhs ->address }}</td>
-        <td>{{ $mhs ->datebirth }}</td>
         <td>
             <form action="{{ route('student.destroy',['student'=>$mhs->nim]) }}" method="POST">
                 <a class="btn btn-info" href="{{ route('student.show',$mhs->nim) }}">Show</a>
@@ -57,7 +53,7 @@
 @endforeach
 </table>
 <div class="d-flex justify-content-center">
-    {{ $student->links()}}
+    {{ $paginate->links()}}
 </div>
 
 @endsection

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
-use DB;
+use App\Models\ClassModel;
 
 class StudentController extends Controller
 {
@@ -16,9 +16,9 @@ class StudentController extends Controller
     public function index()
     {
         //the eloquent function to displays data
-        $student=DB::table('student')->paginate(3);//Mengambil semua isi tabel
-        $paginate=Student::orderBy('id_student','asc')->paginate(3);
-        return view('student.index',['student'=>$student,'paginate'=>$paginate]);
+        $student = Student::with('class')->get();
+        $paginate = Student::orderBy('id_student','asc')->paginate(3);
+        return view('student.index', ['student'=>$student,'paginate'=>$paginate]);
     }
 
     public function search(Request $request)
@@ -27,10 +27,7 @@ class StudentController extends Controller
 
         $student = Student::where('name', 'like', "%" . $keyword . "%")
         ->orWhere('nim', 'like', "%" . $keyword . "%")
-        ->orWhere('class', 'like', "%" . $keyword . "%")
         ->orWhere('major', 'like', "%" . $keyword . "%")
-        ->orWhere('address', 'like', "%" . $keyword . "%")
-        ->orWhere('datebirth', 'like', "%" . $keyword . "%")
         ->paginate(3);
         return view('student.search', compact('student'))
             ->with('i', (request()->input('page', 1) - 1) * 3);
@@ -38,41 +35,51 @@ class StudentController extends Controller
 
     public function create()
     {
-        return view('student.create');
+        $class = ClassModel::all();//get data from class table
+        return view('student.create',['class' => $class]);
     }
 
     public function store(Request $request)
     {
-        //melakukan validasi data
+        //data validation
         $request->validate([
             'Nim'=>'required',
             'Name'=>'required',
             'Class'=>'required',
             'Major'=>'required',
-            'Address'=>'required',
-            'Datebirth'=>'required',
         ]);
 
-        //eloquent function to add data
-        Student::create($request->all());
+        $student = new Student;
+        $student->nim = $request->get('Nim');
+        $student->name = $request->get('Name');
+        $student->major = $request->get('Major');
 
-        //if the data is added succesfully, will return to the main page
+        $class = new ClassModel;
+        $class->id = $request->get('Class');
+
+        //eloquent function to add data using belongsTo relation
+        $student->class()->associate($class);
+        $student->save();
+
         return redirect()->route('student.index')
-        ->with('success','Student Successfully Added');
+            ->with('success', 'Student succesfully added');
     }
 
     public function show($nim)
     {
         //displays detailed data by finding / by Student Nim
-        $Student = Student::where('nim',$nim)->first();
-        return view('student.detail',compact('Student'));
+        //code before we create a relation --> $Student = Student::find($nim);
+        $Student = Student::with('class')->where('nim', $nim)->first();
+
+        return view('student.detail',['Student' => $Student]);
     }
 
     public function edit($nim)
     {
         //displays detail data by finding based on Student Nim for editing
-        $Student = Student::where('nim',$nim)->first();
-        return view('student.edit',compact('Student'));
+        $Student = Student::with('class')->where('nim',$nim)->first();
+        $class = ClassModel::all();
+        return view('student.edit',compact('Student','class'));
     }
 
     public function update(Request $request, $nim)
@@ -83,20 +90,20 @@ class StudentController extends Controller
             'Name'=>'required',
             'Class'=>'required',
             'Major'=>'required',
-            'Address'=>'required',
-            'Datebirth'=>'required',
         ]);
 
-        //eloquent function to update the data
-        Student::where('nim',$nim)
-        ->update([
-            'nim'=>$request->Nim,
-            'name'=>$request->Name,
-            'class'=>$request->Class,
-            'major'=>$request->Major,
-            'address'=>$request->Address,
-            'datebirth'=>$request->Datebirth,
-        ]);
+        $student = Student::with('class')->where('nim',$nim)->first();
+        $student->nim = $request->get('Nim');
+        $student->name = $request->get('Name');
+        $student->major = $request->get('Major');
+
+        $class = new ClassModel;
+        $class->id = $request->get('Class');
+        $student->save();
+
+        //eloquent function to update the data with belongsTo relation
+        $student->class()->associate($class);
+        $student->save();
 
         //if the data successfully updated, will return to main page
         return redirect()->route('student.index')
