@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 |
 */
 Route::resource('student', StudentController::class);
-Route::get('/student/search','StudentController@search');
+Route::get('search',[StudentController::class, 'search']);
 
 Route::get('/', function () {
     return view('welcome');

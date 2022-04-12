@@ -16,13 +16,14 @@
 @endif
 <div class="row">
     <div class="col-md-6">
-        <form action="/student">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search..." name="search" value="{{
-                    request('search')}}">
-                <button class="btn btn-danger" type="submit">Search</button>
-            </div>
-        </form>
+    <form method="get" action="{{ url('search') }}">
+        <div class="form-group w-100 mb-3">
+            <input type="search" name="search" class="form-control w-75 d-inline" id="search" placeholder="Search Student ...">
+            <span class = "form-group-btn">
+                <button type="submit" class="btn btn-dark">Search</button>
+            </span>
+        </div>
+    </form>
     </div>
 </div>
 <table class="table table-bordered">

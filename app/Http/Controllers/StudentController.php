@@ -23,11 +23,17 @@ class StudentController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->search;
-        $student = DB::table('student')
-        ->where('name','like',"%".$search."%")
-        ->paginate(1);
-        return view('index',['student'=>$student]);
+        $keyword = $request->search;
+
+        $student = Student::where('name', 'like', "%" . $keyword . "%")
+        ->orWhere('nim', 'like', "%" . $keyword . "%")
+        ->orWhere('class', 'like', "%" . $keyword . "%")
+        ->orWhere('major', 'like', "%" . $keyword . "%")
+        ->orWhere('address', 'like', "%" . $keyword . "%")
+        ->orWhere('datebirth', 'like', "%" . $keyword . "%")
+        ->paginate(3);
+        return view('student.search', compact('student'))
+            ->with('i', (request()->input('page', 1) - 1) * 3);
     }
 
     public function create()
