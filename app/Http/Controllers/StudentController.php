@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\ClassModel;
+use App\Models\CourseStudentModel;
 
 class StudentController extends Controller
 {
@@ -19,6 +20,13 @@ class StudentController extends Controller
         $student = Student::with('class')->get();
         $paginate = Student::orderBy('id_student','asc')->paginate(3);
         return view('student.index', ['student'=>$student,'paginate'=>$paginate]);
+    }
+
+    public function value($nim)
+    {
+        $value = Student::with('class','course')->find($nim);
+
+        return view('student.value',compact('value'));
     }
 
     public function search(Request $request)

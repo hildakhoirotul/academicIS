@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 */
 Route::resource('student', StudentController::class);
 Route::get('search',[StudentController::class, 'search']);
+Route::get('student/value/{nim}',[StudentController::class, 'value'])
+->name('student.value');
 
 Route::get('/', function () {
     return view('welcome');
