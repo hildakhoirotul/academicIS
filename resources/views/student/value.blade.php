@@ -31,8 +31,8 @@
     </tr>
     @endforeach
 </table>
-<div class="float-right my-2">
-    <a href="{{ route('student.index') }}" class="btn btn-success mt-3">Back</a>
+<div class="col-12 text-center">
+    <a href="{{ route('print_khs', $student->nim) }}" class="btn btn-danger">Print KHS</a>
 </div>
 
 @endsection

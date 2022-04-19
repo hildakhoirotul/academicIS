@@ -6,6 +6,8 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\ClassModel;
 use App\Models\CourseStudentModel;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class StudentController extends Controller
 {
@@ -55,12 +57,17 @@ class StudentController extends Controller
             'Name'=>'required',
             'Class'=>'required',
             'Major'=>'required',
+            'Picture'=>'required',
         ]);
+        if ($request->file('picture')) {
+            $picture_name = $request->file('picture')->store('picture', 'public');
+        }
 
         $student = new Student;
         $student->nim = $request->get('Nim');
         $student->name = $request->get('Name');
         $student->major = $request->get('Major');
+        $student->picture = $picture_name;
 
         $class = new ClassModel;
         $class->id = $request->get('Class');
@@ -101,9 +108,19 @@ class StudentController extends Controller
         ]);
 
         $student = Student::with('class')->where('nim',$nim)->first();
+
+        if ($student->picture && file_exists(storage_path('app/public/' . $student->picture))) {
+            Storage::delete('public/' . $student->picture);
+        }
+
+        if ($request->file('picture')) {
+            $picture_name = $request->file('picture')->store('picture', 'public');
+        }
+
         $student->nim = $request->get('Nim');
         $student->name = $request->get('Name');
         $student->major = $request->get('Major');
+        $student->picture = $picture_name;
 
         $class = new ClassModel;
         $class->id = $request->get('Class');
@@ -121,9 +138,24 @@ class StudentController extends Controller
     public function destroy($nim)
     {
         //eloquent function to delete the data
-        Student::where('nim',$nim)->delete();
+        $student = Student::find($nim);
+        if ($student->picture && file_exists(storage_path('app/public/' . $student->picture))) {
+            Storage::delete('public/' . $student->picture);
+        }
+
+        $student->course()->detach();
+
+        $student->delete();
         return redirect()->route('student.index')
         ->with('success','Student Successfully Deleted');
+    }
+
+    public function print_khs($nim)
+    {
+        $student = Student::findOrFail($nim);
+
+        $pdf = PDF::loadview('student.print_khs', ['student' => $student]);
+        return $pdf->stream();
     }
 
 };

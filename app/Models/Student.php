@@ -26,6 +26,7 @@ class Student extends Model // Model definition
         'name',
         'class_id',
         'major',
+        'picture',
     ];
 
     public function class()

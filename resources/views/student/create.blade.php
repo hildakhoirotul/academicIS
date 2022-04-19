@@ -37,6 +37,10 @@
                     <label for="Major">Major</label>
                     <input type="Major" name="Major" class="form-control" id="Major" ariadescribedby="Major" >
                 </div>
+                <div class="form-group">
+                    <label for="picture">Profile Picture</label>
+                    <input type="file" class="form-control-file" id="picture" name="picture">
+                </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

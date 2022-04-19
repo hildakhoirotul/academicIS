@@ -40,6 +40,18 @@
                         <label for="Major">Major</label>
                         <input type="Major" name="Major" class="form-control" id="Major" value="{{ $Student->major }}" aria-describedby="Major" >
                     </div>
+                    @php
+                        $pathImage = '';
+                        $Mahasiswa->photo ? ($pathImage = 'storage/' . $Mahasiswa->photo) : ($pathImage = 'img/empty.jpg');
+                    @endphp
+                    <div class="d-flex align-items-start mb-3">
+                            <img src="{{ asset('' . $pathImage . '') }}" alt="" width="100" class="img-responsive">
+                            <div class="form-group ml-3 ">
+                                <label for="picture">Profile Picture</label>
+                                <input type="file" class="form-control-file" id="picture" name="picture">
+                            </div>
+                        </div>
+                    </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

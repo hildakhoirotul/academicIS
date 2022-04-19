@@ -32,6 +32,7 @@
         <th>Name</th>
         <th>Class</th>
         <th>Major</th>
+        <th>Picture</th>
         <th width="280px">Action</th>
     </tr>
 @foreach ($paginate as $mhs)
@@ -40,6 +41,13 @@
         <td>{{ $mhs ->name }}</td>
         <td>{{ $mhs ->class->class_name }}</td>
         <td>{{ $mhs ->major }}</td>
+        <td>
+            @php
+            $pathImage = '';
+            $student->picture ? ($pathImage = 'storage/' . $student->picture) : ($pathImage = 'picture/empty.png');
+            @endphp
+            <img src="{{ asset('' . $pathImage . '') }}" width="100" alt="">
+        </td>
         <td>
             <form action="{{ route('student.destroy',['student'=>$mhs->nim]) }}" method="POST">
                 <a class="btn btn-info" href="{{ route('student.show',$mhs->nim) }}">Show</a>

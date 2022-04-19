@@ -19,6 +19,7 @@ class CreateStudentTable extends Migration
             $table->string('name', 25)->index();
             $table->string('class', 5);
             $table->string('major', 35);
+            $table->string('picture')->nullable();
             $table->timestamps();
         });
     }
