@@ -22,12 +22,12 @@
         <th><strong>Semester</strong></th>
         <th><strong>Value</strong></th>
     </tr>
-    @foreach($value->course as $scr)
+    @foreach($value->course as $crs)
     <tr>
-        <td>{{ $scr ->course_name }}</td>
-        <td>{{ $scr ->sks }}</td>
-        <td>{{ $scr ->semester }}</td>
-        <td>{{ $scr ->pivot->value }}</td>
+        <td>{{ $crs ->course_name }}</td>
+        <td>{{ $crs ->sks }}</td>
+        <td>{{ $crs ->semester }}</td>
+        <td>{{ $crs ->pivot->value }}</td>
     </tr>
     @endforeach
 </table>

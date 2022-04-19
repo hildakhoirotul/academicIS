@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;//Model Eloquent
 use App\Models\ClassModel;
 use App\Models\CourseModel;
-use App\Models\CourseStudentModel;
 
 class Student extends Model // Model definition
 {

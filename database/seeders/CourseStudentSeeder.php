@@ -15,19 +15,19 @@ class CourseStudentSeeder extends Seeder
     public function run()
     {
         $courseStudent = [
-            [   'student_id' => 1,
+            [   'student_id' => '2041788831',
                 'course_id' => 3,
                 'value' => 'A',
             ],
-            [   'student_id' => 1,
+            [   'student_id' => '2041788831',
                 'course_id' => 2,
                 'value' => 'B',
             ],
-            [   'student_id' => 1,
+            [   'student_id' => '2041788831',
                 'course_id' => 1,
                 'value' => 'C',
             ],
-            [   'student_id' => 1,
+            [   'student_id' => '2041788831',
                 'course_id' => 4,
                 'value' => 'D',
             ],
